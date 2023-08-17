@@ -1,0 +1,19 @@
+$("#category").on("change",function(){
+
+                let value = $(this).val();
+
+                $.ajax({
+                  url:"{{ route('categoryBySubCategory') }}",
+                  method:"get",
+                  data:{value:value},
+                  success:function(res){
+                     console.log(res);
+                     $("#sub_category").empty();
+                     $.each(res,function(index,value){
+
+                        $("#sub_category").append(`<option value="${value.id}">${value.name}</option>`);
+                     });
+                  }
+
+                })
+            })

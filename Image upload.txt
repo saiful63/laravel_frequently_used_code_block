@@ -1,0 +1,11 @@
+if($request->hasFile('logo')){
+            $file = $request->file('logo');
+            $file_extension = $file->getClientOriginalExtension();
+            $random = str::random(12);
+            $file_name = $random.'.'.$file_extension;
+            $file_destination = public_path().'/backend/img/logo/';
+            $request->file('logo')->move($file_destination,$file_name);
+
+            $setting->logo = $file_name;
+     }
+        $setting->save();
