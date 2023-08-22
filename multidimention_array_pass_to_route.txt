@@ -1,0 +1,32 @@
+$jsonParameter = json_encode([
+'post' => $post->id,
+'tags' => [
+    'name' => 'Saiful',
+    'roll' => 1
+]
+]);
+$tag = urlencode($jsonParameter);
+
+
+*Route:
+
+<a href="{{ route('tagDataForEdit', ['jsonParameter' => $tag,'post'=>$post->id]) }}"></a>
+
+Route::get('/selected-tag/{jsonParameter}/{post}',[PostController::class,'tagDataForEdit'])->name('tagDataForEdit');
+
+
+*Controller.php
+
+$data = urldecode($jsonParameter);
+$jsonArray = json_decode($data, true);
+
+
+*Blade.php:
+
+@php
+  $tags = $jsonArray['tags'];
+@endphp
+@foreach ($tags as $key=>$value)
+    
+    <li>{{ $key }} : {{ $value }}</li>
+@endforeach
