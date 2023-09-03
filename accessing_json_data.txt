@@ -1,0 +1,15 @@
+Here converted array from json is a multidimentional array,
+
+<ul>
+@php
+ $list = json_decode($sub_category_item);
+@endphp
+@foreach ($list as $items)
+
+@foreach ($items->posts as $items2)
+    <li>{!! $items2->description !!}</li>
+@endforeach
+
+@endforeach
+
+</ul>
