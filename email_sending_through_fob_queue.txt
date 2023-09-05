@@ -1,0 +1,78 @@
+1.php artisan make:mail ContactUs --markdown=email=contact_us
+2.php artisan make:job SendContactMail
+3.php artisan queue:table
+4.php artisan migrate
+
+*FrontendController.php
+
+public function addContactMsg(Request $request,Contact $contact){
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'number'=>'required|numeric',
+            'subject'=>'required',
+            'message'=>'required'
+        ]);
+
+        $msg_store = $contact->create($request->all());
+        SendContactMail::dispatch($msg_store->toArray());
+
+        return redirect()->route('contactUs');
+
+
+ }
+ 
+*App/Jobs/SendContactMail.php:
+ 
+private $contact;
+public function __construct($contact)
+{
+$this->contact = $contact;
+}
+
+public function handle()
+{
+Mail::to('admin@gmail.com')->send(new ContactUs($this->contact));
+}
+
+*App/Mail/ContactUs:
+
+private $contact;
+public function __construct($contact)
+{
+$this->contact = $contact;
+}
+
+public function content()
+{
+return new Content(
+    markdown: 'emails.contact_us',
+    with: ['contact'=>$this->contact]
+);
+}
+
+*Viewa/emails/contact_us.blade.php:
+
+{{ config('app.name') }}
+<ul>
+    <li>Name:{{ $contact['name'] }}</li>
+    <li>Subject:{{ $contact['name'] }}</li>
+    <li>Email:{{ $contact['email'] }}</li>
+    <li>Number:{{ $contact['number'] }}</li>
+    <li>Message:{{ $contact['message'] }}</li>
+</ul>
+
+
+*.env:
+QUEUE_CONNECTION=database
+
+5.php artisan queue:work
+    
+    
+    
+    
+    
+    
+    
+    
+    
