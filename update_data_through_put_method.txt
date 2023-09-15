@@ -1,0 +1,32 @@
+$user = User::where('id',Auth::user()->id);
+$user_data = [
+    'name'=>$request->name,
+    'email'=>$request->email
+];
+if($request->hasFile('photo')){
+  $old_photo_path = public_path('image/profile/'.$request->photo_invisible);
+  unlink($old_photo_path);
+  $photo = $request->file('photo');
+  $photo_destination = public_path().'/image/profile/';
+  $request->file('photo')->move($photo_destination,$photo->getClientOriginalName());
+  $user_data['photo'] = $photo->getClientOriginalName();
+}
+if($request->division){
+    $user_data['division'] = $request->division;
+}
+if($request->district){
+    $user_data['district'] = $request->district;
+}
+if($request->upazila){
+    $user_data['upazila'] = $request->upazila;
+}
+
+if($request->password){
+    $user_data['password'] = Hash::make($request->password);
+}
+$user_data_updated = $user->update($user_data);
+if($user_data_updated){
+    session()->flash('cls', 'success');
+    session()->flash('msg', 'Profile updated');
+    return redirect()->route('profile.index');
+}
