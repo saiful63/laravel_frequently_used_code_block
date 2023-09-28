@@ -1,0 +1,7 @@
+<button class="btn btn-danger" onclick="delData(confirm('Are you want to delete?'))">Delete</button>
+
+function delData(result_val){
+        if(result_val === false){
+           event.preventDefault();
+        }
+}
