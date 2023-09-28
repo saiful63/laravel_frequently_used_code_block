@@ -1,0 +1,19 @@
+<td><a href="{{ route('getShrotenOne',$url->code) }}" onclick="Redirect(redirection{{ $url->code }})" id="redirection{{ $url->code }}">{{ route('getShrotenOne',$url->code) }}</a></td>
+
+
+function Redirect(value){
+        console.log(value);
+       if (value instanceof HTMLAnchorElement && value.getAttribute('href')) {
+
+        const href = value.getAttribute('href');
+        const newTab = window.open(href, "_blank");
+        setTimeout(function() {
+            window.location.reload();
+        }, 100);
+        } else {
+        console.error("Element or 'href' attribute not found.");
+        }
+
+
+
+}
