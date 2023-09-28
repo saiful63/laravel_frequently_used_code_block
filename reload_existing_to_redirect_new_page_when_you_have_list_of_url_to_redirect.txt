@@ -8,12 +8,13 @@ function Redirect(value){
         const href = value.getAttribute('href');
         const newTab = window.open(href, "_blank");
         setTimeout(function() {
+            window.location.href="{{ route('home') }}";
             window.location.reload();
-        }, 100);
+        });
+
         } else {
         console.error("Element or 'href' attribute not found.");
         }
-
 
 
 }
