@@ -1,0 +1,14 @@
+if($request->hasFile('book_image')){
+	$file = $request->file('book_image');
+	$file_extension = $file->getClientOriginalExtension();
+	$random = Str::random(10);
+	$file_name = $random.'.'.$file_extension;
+	$check_unique_image = $product->where('book_image',$file_name)->first();
+	if($check_unique_image){
+	$file_name = $random.'.'.$file_extension;
+	}
+	$destination = public_path().'/img/';
+	$request->file('book_image')->move($destination,$file_name);
+
+
+}
