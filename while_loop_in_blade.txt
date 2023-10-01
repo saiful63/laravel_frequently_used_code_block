@@ -1,0 +1,21 @@
+@php
+    $i = 0;
+    while($i!=10):
+@endphp
+<div class="">
+    <div class="product_card">
+        <img src="{{ asset('img/retail21.jpg') }}" alt="">
+
+        <span>
+            <p>
+                New branded T-shirt
+            </p>
+        </span>
+        <span>Price: 300 Tk</span>
+        <button class="btn btn-primary">Add to cart</button>
+    </div>
+</div>
+@php
+$i++;
+endwhile;
+@endphp
